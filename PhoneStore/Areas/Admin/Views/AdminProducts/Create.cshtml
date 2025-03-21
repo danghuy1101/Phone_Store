@@ -1,0 +1,76 @@
+﻿@model PhoneStore.Models.phone
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "AdminProducts", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="checkbox-img">
+        <div class="box-img-admin">
+            <img id="blah" src="#" alt="" width="80px" height="80px" /><br>
+            <input accept="image/*" type='file' id="imgInp" name="Image1" />
+            <label for="imgInp">Hình 1</label>
+        </div>
+        <div class="box-img-admin">
+            <img id="bleh" src="#" alt="" width="80px" height="80px" /><br>
+            <input accept="image/*" type='file' id="imgImp" name="Image2" />
+            <label for="imgImp">Hình 2</label>
+        </div>
+        <div class="box-img-admin">
+            <img id="bldh" src="#" alt="" width="80px" height="80px" /><br>
+            <input accept="image/*" type='file' id="imgIop" name="Image3" />
+            <label for="imgIop">Hình 3</label>
+        </div>
+    </div>
+
+    <div class="detail-admin">
+        <div class="projects">
+            <div class="card-body">
+                <input type="text" name="Name" class="form-control" placeholder="Tên sản phẩm" /><br>
+                <label>Số lượng:</label>
+                <input type="number" name="Stock" min="1" max="10000" value="1" class="form-control" style="width:100px"><br>
+                <input type="text" name="Price" class="form-control" placeholder="Giá sản phẩm" /><br>
+
+                <input type="checkbox" id="myCheck" onclick="myFunction()">
+                <span>Giảm giá</span>
+                <input type="text" id="text" name="InitialPrice" style="display:none;" class="form-control" placeholder="Giá gốc" />
+
+                <script>
+                    function myFunction() {
+                        var checkBox = document.getElementById("myCheck");
+                        var text = document.getElementById("text");
+                        text.style.display = checkBox.checked ? "block" : "none";
+                    }
+                </script>
+
+                <div class="input-box" style="margin:10px 0px">
+                    <label>Danh mục:</label>
+                    @Html.DropDownList("category_id", (SelectList)ViewBag.CategoryID, "Chọn danh mục", new { @class = "form-control" })
+                </div>
+                <textarea class="input-introd-prod" name="Description" placeholder="Mô tả sản phẩm" rows="10"></textarea>
+                <button type="submit" class="btn btn-success" style="width:100%">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkbox-detail-admin">
+        <table class="table table-striped">
+            <tbody>
+                <tr><td>Chipset</td><td>@Html.EditorFor(model => model.chipset, new { htmlAttributes = new { @class = "form-control" } })</td></tr>
+                <tr><td>RAM</td><td>@Html.EditorFor(model => model.ram, new { htmlAttributes = new { @class = "form-control" } })</td></tr>
+                <tr><td>Bộ nhớ trong</td><td>@Html.EditorFor(model => model.memory, new { htmlAttributes = new { @class = "form-control" } })</td></tr>
+                <tr><td>Kích thước màn hình</td><td>@Html.EditorFor(model => model.screen_size, new { htmlAttributes = new { @class = "form-control" } })</td></tr>
+                <tr><td>Hệ điều hành</td><td>@Html.EditorFor(model => model.os, new { htmlAttributes = new { @class = "form-control" } })</td></tr>
+                <tr><td>Camera</td><td>@Html.EditorFor(model => model.camera, new { htmlAttributes = new { @class = "form-control" } })</td></tr>
+                <tr><td>Pin</td><td>@Html.EditorFor(model => model.pin, new { htmlAttributes = new { @class = "form-control" } })</td></tr>
+                <tr><td>Độ phân giải</td><td>@Html.EditorFor(model => model.resolution, new { htmlAttributes = new { @class = "form-control" } })</td></tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+<div>@Html.ActionLink("Quay lại", "Index")</div>

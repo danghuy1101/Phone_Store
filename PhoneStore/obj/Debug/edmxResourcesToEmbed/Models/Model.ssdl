@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PhoneStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="categories">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="category_image" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="favorites">
+    <Key>
+      <PropertyRef Name="user_id" />
+      <PropertyRef Name="phone_id" />
+    </Key>
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="phone_id" Type="int" Nullable="false" />
+    <Property Name="added_at" Type="datetime" />
+  </EntityType>
+  <EntityType Name="news">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="image_title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="created_at" Type="datetime" />
+  </EntityType>
+  <EntityType Name="order_details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="order_id" Type="int" />
+    <Property Name="phone_id" Type="int" />
+    <Property Name="quantity" Type="int" Nullable="false" />
+    <Property Name="unit_price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="final_price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" />
+    <Property Name="total_price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="status" Type="nvarchar" MaxLength="20" />
+    <Property Name="created_at" Type="datetime" />
+    <Property Name="address" Type="nvarchar(max)" />
+    <Property Name="phone_number" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="phones">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="category_id" Type="int" />
+    <Property Name="price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="initial_price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="stock" Type="int" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="image1" Type="nvarchar(max)" />
+    <Property Name="image2" Type="nvarchar(max)" />
+    <Property Name="image3" Type="nvarchar(max)" />
+    <Property Name="created_at" Type="datetime" />
+    <Property Name="chipset" Type="nvarchar" MaxLength="50" />
+    <Property Name="ram" Type="nvarchar" MaxLength="20" />
+    <Property Name="memory" Type="nvarchar" MaxLength="50" />
+    <Property Name="screen_size" Type="nvarchar" MaxLength="50" />
+    <Property Name="os" Type="nvarchar" MaxLength="50" />
+    <Property Name="camera" Type="nvarchar" MaxLength="50" />
+    <Property Name="pin" Type="nvarchar" MaxLength="50" />
+    <Property Name="resolution" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="reviews">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" />
+    <Property Name="phone_id" Type="int" />
+    <Property Name="rating" Type="int" />
+    <Property Name="comment" Type="nvarchar(max)" />
+    <Property Name="created_at" Type="datetime" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="role" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="phone_number" Type="nchar" MaxLength="10" />
+    <Property Name="avatar_image" Type="nvarchar(max)" />
+    <Property Name="created_at" Type="datetime" />
+  </EntityType>
+  <Association Name="FK__favorites__phone__59063A47">
+    <End Role="phones" Type="Self.phones" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="favorites" Type="Self.favorites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="phones">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="favorites">
+        <PropertyRef Name="phone_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__favorites__user___5812160E">
+    <End Role="users" Type="Self.users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="favorites" Type="Self.favorites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="favorites">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__order_det__order__619B8048">
+    <End Role="orders" Type="Self.orders" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="order_details" Type="Self.order_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="orders">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="order_details">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__order_det__phone__628FA481">
+    <End Role="phones" Type="Self.phones" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="order_details" Type="Self.order_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="phones">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="order_details">
+        <PropertyRef Name="phone_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__user_id__5EBF139D">
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__phones__category__5441852A">
+    <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+    <End Role="phones" Type="Self.phones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categories">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="phones">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__reviews__phone_i__68487DD7">
+    <End Role="phones" Type="Self.phones" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="phones">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="reviews">
+        <PropertyRef Name="phone_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__reviews__user_id__6754599E">
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="reviews">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PhoneStoreModelStoreContainer">
+    <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="favorites" EntityType="Self.favorites" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="news" EntityType="Self.news" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="order_details" EntityType="Self.order_details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="phones" EntityType="Self.phones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="reviews" EntityType="Self.reviews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__favorites__phone__59063A47" Association="Self.FK__favorites__phone__59063A47">
+      <End Role="phones" EntitySet="phones" />
+      <End Role="favorites" EntitySet="favorites" />
+    </AssociationSet>
+    <AssociationSet Name="FK__favorites__user___5812160E" Association="Self.FK__favorites__user___5812160E">
+      <End Role="users" EntitySet="users" />
+      <End Role="favorites" EntitySet="favorites" />
+    </AssociationSet>
+    <AssociationSet Name="FK__order_det__order__619B8048" Association="Self.FK__order_det__order__619B8048">
+      <End Role="orders" EntitySet="orders" />
+      <End Role="order_details" EntitySet="order_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__order_det__phone__628FA481" Association="Self.FK__order_det__phone__628FA481">
+      <End Role="phones" EntitySet="phones" />
+      <End Role="order_details" EntitySet="order_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__user_id__5EBF139D" Association="Self.FK__orders__user_id__5EBF139D">
+      <End Role="users" EntitySet="users" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__phones__category__5441852A" Association="Self.FK__phones__category__5441852A">
+      <End Role="categories" EntitySet="categories" />
+      <End Role="phones" EntitySet="phones" />
+    </AssociationSet>
+    <AssociationSet Name="FK__reviews__phone_i__68487DD7" Association="Self.FK__reviews__phone_i__68487DD7">
+      <End Role="phones" EntitySet="phones" />
+      <End Role="reviews" EntitySet="reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK__reviews__user_id__6754599E" Association="Self.FK__reviews__user_id__6754599E">
+      <End Role="users" EntitySet="users" />
+      <End Role="reviews" EntitySet="reviews" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

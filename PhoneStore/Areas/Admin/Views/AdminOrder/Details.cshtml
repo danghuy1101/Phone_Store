@@ -1,0 +1,103 @@
+﻿@model IEnumerable<PhoneStore.Models.order_details>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+    var formatMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+<h2><i class="bi bi-receipt-cutoff"></i> Chi tiết đơn hàng </h2>
+
+<div class="card-bill">
+    <div class="product border-bottom table-responsive">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Sản phẩm</th>
+                    <th style="text-align:center">Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int index = 1; }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(index++)</td>
+                        <td>
+                            <div class="product-infor-cart">
+                                <img src="@item.phone.image1" alt="@item.phone.name" style="width: 50px; height: 50px;">
+                                <div class="name-product-cart">@item.phone.name</div>
+                            </div>
+                        </td>
+                        <td style="text-align:center">@item.quantity</td>
+                        <td>@String.Format(formatMoney, "{0:c0}", item.unit_price)</td>
+                        <td>@String.Format(formatMoney, "{0:c0}", item.final_price)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row d-flex order-infor">
+        <div class="col-md-6">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <td><span class="text-muted">Tên khách hàng</span></td>
+                        <td class="text-right">@ViewBag.CusInfor.user.name</td>
+                    </tr>
+                    <tr>
+                        <td><span class="text-muted">Số điện thoại</span></td>
+                        <td class="text-right">@ViewBag.CusInfor.phone_number</td>
+                    </tr>
+                    <tr>
+                        <td><span class="text-muted">Ngày đặt</span></td>
+                        <td class="text-right">@String.Format("{0:dd/MM/yyyy}", ViewBag.Date)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="text-muted">Địa chỉ giao hàng</span></td>
+                        <td class="text-right">@ViewBag.Address</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <td><span class="text-muted">Tổng phụ</span></td>
+                        <td class="text-right">@String.Format(formatMoney, "{0:c0}", ViewBag.FinalPrice)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="text-muted">Phí vận chuyển</span></td>
+                        <td class="text-right">0 đ</td>
+                    </tr>
+                    <tr>
+                        <td><span class="text-muted">Khuyến mãi</span></td>
+                        <td class="text-right text-success">0 đ</td>
+                    </tr>
+                    <tr class="border-top border-bottom">
+                        <td><span class="font-weight-bold">Tổng tiền</span></td>
+                        <td class="text-right font-weight-bold">@String.Format(formatMoney, "{0:c0}", ViewBag.FinalPrice)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-end">
+                @if (ViewBag.Status == "pending")
+                {
+                    <a href='@Url.Action("Confirm", "AdminOrder", new { id = ViewBag.Id })' class="btn btn-success mr-2">
+                        Xác nhận đơn hàng
+                    </a>
+                }
+                <a href="@Url.Action("Index", "AdminOrder")" class="btn btn-secondary">
+                    Quay lại
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

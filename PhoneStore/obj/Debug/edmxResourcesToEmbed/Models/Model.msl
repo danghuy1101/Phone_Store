@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PhoneStoreModelStoreContainer" CdmEntityContainer="PhoneStoreEntities">
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="PhoneStoreModel.category">
+        <MappingFragment StoreEntitySet="categories">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="category_image" ColumnName="category_image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="favorites">
+      <EntityTypeMapping TypeName="PhoneStoreModel.favorite">
+        <MappingFragment StoreEntitySet="favorites">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="phone_id" ColumnName="phone_id" />
+          <ScalarProperty Name="added_at" ColumnName="added_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="news">
+      <EntityTypeMapping TypeName="PhoneStoreModel.news">
+        <MappingFragment StoreEntitySet="news">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="image_title" ColumnName="image_title" />
+          <ScalarProperty Name="content" ColumnName="content" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="order_details">
+      <EntityTypeMapping TypeName="PhoneStoreModel.order_details">
+        <MappingFragment StoreEntitySet="order_details">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="phone_id" ColumnName="phone_id" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+          <ScalarProperty Name="final_price" ColumnName="final_price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="orders">
+      <EntityTypeMapping TypeName="PhoneStoreModel.order">
+        <MappingFragment StoreEntitySet="orders">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="total_price" ColumnName="total_price" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="phones">
+      <EntityTypeMapping TypeName="PhoneStoreModel.phone">
+        <MappingFragment StoreEntitySet="phones">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="initial_price" ColumnName="initial_price" />
+          <ScalarProperty Name="stock" ColumnName="stock" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="image1" ColumnName="image1" />
+          <ScalarProperty Name="image2" ColumnName="image2" />
+          <ScalarProperty Name="image3" ColumnName="image3" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="chipset" ColumnName="chipset" />
+          <ScalarProperty Name="ram" ColumnName="ram" />
+          <ScalarProperty Name="memory" ColumnName="memory" />
+          <ScalarProperty Name="screen_size" ColumnName="screen_size" />
+          <ScalarProperty Name="os" ColumnName="os" />
+          <ScalarProperty Name="camera" ColumnName="camera" />
+          <ScalarProperty Name="pin" ColumnName="pin" />
+          <ScalarProperty Name="resolution" ColumnName="resolution" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reviews">
+      <EntityTypeMapping TypeName="PhoneStoreModel.review">
+        <MappingFragment StoreEntitySet="reviews">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="phone_id" ColumnName="phone_id" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="PhoneStoreModel.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+          <ScalarProperty Name="avatar_image" ColumnName="avatar_image" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

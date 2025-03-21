@@ -1,0 +1,42 @@
+﻿@model IEnumerable<PhoneStore.Models.category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>Danh sách thương hiệu</h2>
+
+<p>
+    @Html.ActionLink("Thêm thương hiệu mới", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-striped" width="100%">
+            <thead>
+                <tr>
+                    <th>Tên thương hiệu</th>
+                    <th>Hình ảnh</th>
+                    <th>Công cụ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.name</td>
+                        <td><img src="~/image/@item.category_image" style="width:250px; height:70px;" alt="@item.name"></td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = item.id })" class="btn btn-warning btn-sm">
+                                <span class="las la-edit"></span> Chỉnh sửa
+                            </a>
+                            <a href="@Url.Action("Delete", new { id = item.id })" class="btn btn-danger btn-sm">
+                                <span class="las la-trash"></span> Xóa
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

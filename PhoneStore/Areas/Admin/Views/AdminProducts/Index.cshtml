@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PhoneStore.Models.phone>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>Danh sách sản phẩm</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a href="@Url.Action("Create")" class="btn btn-primary ms-3">Thêm sản phẩm</a>
+
+    <div class="d-flex align-items-center">
+        <strong style="margin-right: 10px;">Phân loại:</strong>
+
+        @using (Html.BeginForm("Index", "AdminProducts", FormMethod.Get, new { @class = "d-flex align-items-center" }))
+        {
+            @Html.DropDownList("categoryId", (SelectList)ViewBag.Categories, "Tất cả", new { @class = "form-select", style = "width: 180px; padding: 5px;", onchange = "this.form.submit();" })
+        }
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="align-middle text-center">
+            <tr>
+                <th>Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Thương hiệu</th>
+                <th>Công cụ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="align-middle text-center">
+                        <img src="~/images/@item.image1" width="120px" height="120px">
+                    </td>
+                    <td class="align-middle text-center">@item.name</td>
+                    <td class="align-middle text-center">@item.stock</td>
+                    <td class="align-middle text-center">@item.category.name</td>
+                    <td class="align-middle text-center">
+                        <a href="@Url.Action("Edit", new { id = item.id })" class="btn btn-warning btn-sm" style="margin-bottom: 10px;">
+                            <span class="las la-edit"></span> Chỉnh sửa
+                        </a>
+                        <br />
+                        <a href="@Url.Action("Delete", new { id = item.id })" class="btn btn-danger btn-sm">
+                            <span class="las la-trash"></span> Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+

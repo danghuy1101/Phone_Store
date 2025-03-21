@@ -1,0 +1,16 @@
+﻿@model PhoneStore.Models.news
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3">@Model.title</h2>
+    <p class="text-muted">Ngày đăng: @(Model.created_at.HasValue ? Model.created_at.Value.ToString("dd/MM/yyyy") : "Không xác định")</p>
+    <hr>
+    <div class="news-content">
+        <p>@Html.Raw(Model.content)</p>
+    </div>
+    <a href="@Url.Action("Index", "News")" class="btn btn-primary mt-3">Quay lại danh sách</a>
+</div>

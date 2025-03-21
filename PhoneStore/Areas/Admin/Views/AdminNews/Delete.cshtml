@@ -1,0 +1,48 @@
+﻿@model PhoneStore.Models.news
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center text-danger">Xóa Tin Tức</h2>
+                <hr />
+
+                <h5 class="text-center">Bạn có chắc chắn muốn xóa bài viết này?</h5>
+
+                <dl class="row mt-4">
+                    <dt class="col-sm-4 font-weight-bold">Tiêu đề:</dt>
+                    <dd class="col-sm-8"><strong>@Model.title</strong></dd>
+
+                    <dt class="col-sm-4 font-weight-bold">Hình ảnh:</dt>
+                    <dd class="col-sm-8">
+                        <img src="~/image/@Model.image_title" alt="Hình ảnh tin tức" class="img-thumbnail" width="200px" height="100px" />
+                    </dd>
+
+                    <dt class="col-sm-4 font-weight-bold">Ngày tạo:</dt>
+                    <dd class="col-sm-8">
+                        @(Model.created_at.HasValue ? Model.created_at.Value.ToString("dd/MM/yyyy HH:mm") : "Không có dữ liệu")
+                    </dd>
+                </dl>
+
+                @using (Html.BeginForm("Delete", "AdminNews", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.id)
+
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này?');">
+                            Xóa
+                        </button>
+                        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@model PhoneStore.Models.user
+
+<div class="container login-modal">
+    <div class="login-box">
+        <!-- Phần bên trái -->
+        <div class="style-left login-content">
+            <img src="~/image/login.png" alt="Login Image">
+        </div>
+
+        <!-- Phần bên phải -->
+        <div class="style-right login-content">
+            <h3>Xin chào!</h3>
+            <p class="text-secondary">Hãy đăng nhập để nhận được những ưu đãi tốt nhất từ chúng tôi</p>
+
+            @using (Html.BeginForm("Login", "Users", FormMethod.Post, new { @class = "needs-validation", novalidate = "" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="Nhập email" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu" required>
+                </div>
+
+                if (!string.IsNullOrEmpty(ViewBag.ThongBao))
+                {
+                    @:<small class="text-danger">@ViewBag.ThongBao</small>
+                }
+
+                <button type="submit" class="btn login-btn">Đăng nhập</button>
+
+                <div class="forgot-password mt-2">
+                    <a href="@Url.Action("ForgotPassword", "Users")">Quên mật khẩu?</a>
+                </div>
+
+                <p class="text-center mt-3">
+                    Bạn chưa có tài khoản? <a href="@Url.Action("SignUp", "Users")">Đăng ký ngay</a>
+                </p>
+            }
+        </div>
+    </div>
+</div>

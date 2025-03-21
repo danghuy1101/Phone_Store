@@ -1,0 +1,73 @@
+﻿@model PhoneStore.Models.user
+
+<div class="container">
+    <h3 style="padding-left: 285px; margin: 30px auto;">Thông tin tài khoản</h3>
+
+    <div class="row account-content">
+        <div class="col-lg-3 account-left-content">
+            <div class="nav-account-left">
+                <div class="hover-account">
+                    <a href="@Url.Action("Detail", "Users", new { id = Model.id })" style="text-decoration: none">
+                        <i class="bi bi-person-fill"></i> Thông tin tài khoản
+                    </a>
+                </div>
+                <div class="hover-account">
+                    <a href="@Url.Action("GetOrder", "Order", new { id = Model.id })" style="text-decoration: none">
+                        <i class="bi bi-shop-window"></i> Quản lý đơn hàng
+                    </a>
+                </div>
+                <div class="hover-account">
+                    <a href="@Url.Action("FavoriteList", "FavoriteProduct", new { id = Model.id })" style="text-decoration: none">
+                        <i class="bi bi-heart-fill"></i> Sản phẩm yêu thích
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5 middle-account">
+            @using (Html.BeginForm("Detail", "Users", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-user-infor" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.id)
+
+                <div class="img-account">
+                    <img src="~/image/@(string.IsNullOrEmpty(Model.avatar_image) ? "user.png" : Model.avatar_image)" alt="Ảnh đại diện" class="avatar-img">
+                    @Html.HiddenFor(model => model.avatar_image)
+
+                    <input type="file" id="avt-infor" name="ImageUser" accept="image/*">
+                    <label for="avt-infor" class="file-img-avt"><i class="bi bi-pencil-fill"></i></label>
+                </div>
+
+                <div class="text-account">
+                    <div class="form-group">
+                        <label for="">Họ tên</label>
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label for=""><i class="ri-phone-fill"></i> Số điện thoại</label>
+                        @Html.EditorFor(model => model.phone_number, new { htmlAttributes = new { @class = "form-control", pattern = "[0-9]{10}", title = "Số điện thoại phải có 10 chữ số", required = "required" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label for=""><i class="ri-mail-line"></i> Địa chỉ email</label>
+                        <input type="text" class="form-control" value="@Model.email" disabled>
+                        @Html.HiddenFor(model => model.email)
+                        @Html.HiddenFor(model => model.password)
+                    </div>
+
+                    <button type="submit" class="btn save-infor-btn">Lưu thông tin</button>
+                </div>
+            }
+        </div>
+
+        <div class="col-lg-3">
+            <h6>Bảo mật</h6>
+            <div class="detail-account">
+                <span><i class="ri-lock-line"></i> Đổi mật khẩu</span>
+            </div>
+            <a href="@Url.Action("ChangePassword", "Users", new { id = Model.id })" class="button-account">Cập nhật</a>
+        </div>
+    </div>
+</div>

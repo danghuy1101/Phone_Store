@@ -1,0 +1,42 @@
+﻿@model PhoneStore.Models.phone
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>Xóa sản phẩm</h2>
+
+<h3>Bạn có chắc chắn muốn xóa sản phẩm @Model.name?</h3>
+
+<div>
+    <p><strong>Danh mục:</strong> @Model.category.name</p>
+    <p><strong>Giá:</strong> @Model.price.ToString("N0") VNĐ</p>
+    <p><strong>Mô tả:</strong> @Model.description</p>
+</div>
+
+<div class="checkbox-img">
+    @if (!string.IsNullOrEmpty(Model.image1))
+    {
+        <img src="~/image/@Model.image1" alt="Ảnh 1" width="80" height="80" />
+    }
+    @if (!string.IsNullOrEmpty(Model.image2))
+    {
+        <img src="~/image/@Model.image2" alt="Ảnh 2" width="80" height="80" />
+    }
+    @if (!string.IsNullOrEmpty(Model.image3))
+    {
+        <img src="~/image/@Model.image3" alt="Ảnh 3" width="80" height="80" />
+    }
+</div>
+
+@using (Html.BeginForm("Delete", "AdminProducts", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.id)
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        @Html.ActionLink("Quay lại", "Index")
+    </div>
+}

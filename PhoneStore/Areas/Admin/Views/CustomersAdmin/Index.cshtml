@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PhoneStore.Models.user>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>Danh sách khách hàng</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tên khách hàng</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th style="text-align:center;">Ảnh đại diện</th>
+            <th>Ngày tham gia</th>
+            <th>Công cụ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.name)</td>
+                <td>@Html.DisplayFor(modelItem => item.email)</td>
+                <td>@Html.DisplayFor(modelItem => item.phone_number)</td>
+                <td style="text-align:center;">
+                    @if (!string.IsNullOrEmpty(item.avatar_image))
+                    {
+                        <img src="@Url.Content("~/image/" + item.avatar_image)" alt="Avatar" width="50" height="50" class="img-thumbnail" />
+                    }
+                    else
+                    {
+                        <span>Không có ảnh</span>
+                    }
+                </td>
+                <td>@(item.created_at.HasValue ? item.created_at.Value.ToString("dd/MM/yyyy") : "N/A")</td>
+                <td>
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.id }, new { @class = "btn btn-info btn-sm" })                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

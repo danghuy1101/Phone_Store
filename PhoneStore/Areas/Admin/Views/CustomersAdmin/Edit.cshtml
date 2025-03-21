@@ -1,0 +1,80 @@
+﻿@model PhoneStore.Models.user
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2 class="text-center">Chỉnh sửa thông tin người dùng</h2>
+
+@using (Html.BeginForm("Edit", "CustomersAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card shadow p-4">
+        <h4 class="text-center">Thông tin người dùng</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+        <div class="form-group row">
+            @Html.Label("Tên khách hàng", new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.name, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.Label("Email", new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.email, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.Label("Số điện thoại", new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.phone_number, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.Label("Vai trò", new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.DropDownList("role", ViewBag.Roles as List<SelectListItem>, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.role, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Avatar -->
+        <div class="form-group row">
+            @Html.Label("Ảnh đại diện", new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                <div class="mb-3">
+                    <img id="imagePreview" src="@(!string.IsNullOrEmpty(Model.avatar_image) ? Url.Content(Model.avatar_image) : Url.Content("~/images/default-avatar.png"))"
+                         alt="Ảnh đại diện" class="img-thumbnail" width="150px" height="150px" />
+                </div>
+                <input type="file" id="imageInput" name="avatarFile" class="form-control-file" accept="image/*" onchange="previewImage(event)" />
+                @Html.ValidationMessage("avatar_image", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row mt-3">
+            <div class="col-md-10 offset-md-2">
+                <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>

@@ -1,0 +1,51 @@
+﻿@model PhoneStore.Models.category
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h2 class="text-center">Chỉnh sửa thương hiệu</h2>
+            <hr />
+
+            @using (Html.BeginForm("Edit", "AdminCategories", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.id)
+
+                <div class="form-group">
+                    <label for="name">Tên thương hiệu:</label>
+                    @Html.TextBoxFor(model => model.name, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="form-group">
+                    <label for="category_image">Hình ảnh:</label>
+                    <div class="mb-3">
+                        <img id="imagePreview" src="@Url.Content("~/images/" + Model.category_image)" alt="Hình ảnh danh mục" class="img-thumbnail" width="200px" height="50px" />
+                    </div>
+                    <input type="file" id="imageInput" name="ImgCate" class="form-control-file" accept="image/*" onchange="previewImage(event)" />
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">Lưu</button>
+                    @Html.ActionLink("Xóa", "Delete", new { id = Model.id }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>

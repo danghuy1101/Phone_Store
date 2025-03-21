@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PhoneStore.Models.order>
+@{
+    var formatMoney = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+<!-- bill -->
+<div class="container">
+    <h2 style="margin-top: 20px;">Đơn hàng của bạn <i class="bi bi-receipt-cutoff"></i></h2>
+    <div class="card-bill">
+        <div class="product border-bottom table-responsive">
+            <table class="table table-borderless">
+                <tr>
+                    <th>Mã hóa đơn</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Chi tiết</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr class="cart-item">
+                        <td>#@item.id</td>
+                        <td>@(item.created_at.HasValue ? item.created_at.Value.ToString("dd/MM/yyyy HH:mm") : "N/A")</td>
+                        <td>@String.Format(formatMoney, "{0:c0}", item.total_price)</td>
+
+                        <td>
+                            @if (item.status == "pending")
+                            {
+                                <span style="color:red;">Chưa xác nhận</span>
+                            }
+                            else if (item.status == "completed")
+                            {
+                                <span style="color:forestgreen;">Đã xác nhận</span>
+                            }
+                            else if (item.status == "canceled")
+                            {
+                                <span style="color:orange;">Đã hủy</span>
+                            }
+                        </td>
+
+                        <td>
+                            <a href="@Url.Action("OrderDetail", "Order", new { id = item.id })">Chi tiết</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

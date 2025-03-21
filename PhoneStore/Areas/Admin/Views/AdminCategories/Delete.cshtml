@@ -1,0 +1,43 @@
+﻿@model PhoneStore.Models.category
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center text-danger">Xóa thương hiệu</h2>
+                <hr />
+
+                <h5 class="text-center">Bạn có chắc chắn muốn xóa thương hiệu này?</h5>
+
+                <dl class="row mt-4">
+                    <dt class="col-sm-4">Tên thương hiệu:</dt>
+                    <dd class="col-sm-8"><strong>@Model.name</strong></dd>
+
+                    <dt class="col-sm-4">Hình ảnh:</dt>
+                    <dd class="col-sm-8">
+                        <img src="~/image/@Model.category_image" alt="Hình ảnh danh mục" class="img-thumbnail" width="200px" height="50px" />
+                    </dd>
+                </dl>
+
+                @using (Html.BeginForm("Delete", "AdminCategories", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.id)
+
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Bạn có chắc chắn muốn xóa thương hiệu này?');">
+                            Xóa
+                        </button> 
+                        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

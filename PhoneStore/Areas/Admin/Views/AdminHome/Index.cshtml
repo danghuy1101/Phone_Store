@@ -1,0 +1,145 @@
+﻿    
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<style>
+    .report .card table tr td i { 
+        margin-right:15px;
+    }
+
+    .recent-grid {
+        display: flex;
+        gap: 20px; 
+        margin-top: 30px; 
+    }
+
+    .projects {
+        flex: 7; 
+    }
+
+    .report {
+        flex: 3; 
+    }
+</style>
+
+<div class="cards">
+    <div class="card-single">
+        <div>
+            <h4>@ViewBag.CountUser</h4>
+            <span>Khách hàng</span>
+        </div>
+        <div>
+            <span class="las la-users"></span>
+        </div>
+    </div>
+    <div class="card-single">
+        <div>
+            <h4>@ViewBag.CountPhone</h4>
+            <span>Sản phẩm có sẵn</span>
+        </div>
+        <div>
+            <span class="las la-mobile"></span>
+        </div>
+    </div>
+    <div class="card-single">
+        <div>
+            <h4>@ViewBag.CountOrder</h4>
+            <span>Đơn đặt hàng</span>
+        </div>
+        <div>
+            <span class="las la-shopping-cart"></span>
+        </div>
+    </div>
+    <div class="card-single">
+        <div>
+            <h4>@ViewBag.TotalRevenue.ToString("N0") VNĐ</h4>
+            <span>Doanh thu</span>
+        </div>
+        <div>
+            <span class="las la-money-bill"></span>
+        </div>
+    </div>
+</div>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-bar-chart"></i> Danh sách đơn hàng
+                <button onclick="location.href='@Url.Action("Index", "AdminOrder")'" class="btn btn-primary">
+                    Xem tất cả <span class="las la-arrow-right"></span>
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Mã hóa đơn</th>
+                                <th>Tên khách hàng</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in ViewBag.OrderList)
+                            {
+                                <tr>
+                                    <td>#@order.id</td>
+                                    <td>@order.user.name</td>
+                                    <td>@order.total_price.ToString("N0") VNĐ</td>
+                                    @if (order.status == "pending")
+                                    {
+                                        <td style="color:red;">Chưa xác nhận</td>
+                                    }
+                                    else if (order.status == "completed")
+                                    {
+                                        <td style="color:forestgreen;">Đã xác nhận</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="color:orange;">Đã hủy</td>
+                                    }
+                                    <td><a href="#">Xem chi tiết</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="report">
+        <div class="card">
+            <div class="card-header" style="display: block;">
+                <div class="las la-bell"></div> <span>Thống kê đơn hàng</span>
+            </div>
+            <table class="table table-hover">
+                <tr>
+                    <td>
+                        <i class="bi bi-calendar4-week"></i> Đơn đặt hàng hôm nay:&emsp; @ViewBag.OrderToday đơn hàng
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="bi bi-clock-history"></i> Đơn hàng đang chờ xác nhận:&emsp; @ViewBag.PendingOrder đơn hàng
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="bi bi-check-lg"></i> Đơn hàng đã xác nhận:&emsp; @ViewBag.CompletedOrder đơn hàng
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="bi bi-x-circle"></i> Đơn hàng đã hủy:&emsp; @ViewBag.CanceledOrder đơn hàng
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

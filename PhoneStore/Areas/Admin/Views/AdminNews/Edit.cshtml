@@ -1,0 +1,61 @@
+﻿@model PhoneStore.Models.news
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center text-primary">Chỉnh sửa tin tức</h2>
+                <hr />
+
+                @using (Html.BeginForm("Edit", "AdminNews", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.id)
+
+                    <div class="form-group">
+                        <label class="font-weight-bold">Tiêu đề:</label>
+                        @Html.TextBoxFor(model => model.title, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold">Hình ảnh hiện tại:</label>
+                        <div class="mb-3">
+                            <img id="imagePreview" src="~/image/@Model.image_title" alt="Hình ảnh tin tức" class="img-thumbnail" width="200px" height="100px" />
+                        </div>
+                        <label class="font-weight-bold">Chọn hình ảnh mới:</label>
+                        <input type="file" id="imageInput" name="imageFile" class="form-control-file" accept="image/*" onchange="previewImage(event)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold">Nội dung:</label>
+                        @Html.TextAreaFor(model => model.content, new { @class = "form-control", rows = 5, id = "myeditor" })
+                        @Html.ValidationMessageFor(model => model.content, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+                        @Html.ActionLink("Hủy", "Index", null, new { @class = "btn btn-secondary" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+

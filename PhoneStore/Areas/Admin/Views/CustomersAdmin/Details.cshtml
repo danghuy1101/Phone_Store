@@ -1,0 +1,43 @@
+﻿@model PhoneStore.Models.user
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Thông tin khách hàng</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            @if (!string.IsNullOrEmpty(Model.avatar_image))
+            {
+                <img src="@Url.Content("~/image/" + Model.avatar_image)" class="img-thumbnail" style="width:200px; height:200px; border-radius:50%" />
+            }
+            else
+            {
+                <img src="~/images/default-avatar.png" class="img-thumbnail" style="width:200px; height:200px; border-radius:50%" />
+            }
+        </div>
+        <div class="col-md-9">
+            <dl class="dl-horizontal">
+                <dt>Tên khách hàng</dt>
+                <dd>@Html.DisplayFor(model => model.name)</dd>
+
+                <dt>Email</dt>
+                <dd>@Html.DisplayFor(model => model.email)</dd>
+
+                <dt>Số điện thoại</dt>
+                <dd>@Html.DisplayFor(model => model.phone_number)</dd>
+
+                <dt>Ngày tham gia</dt>
+                <dd>@(Model.created_at.HasValue ? Model.created_at.Value.ToString("dd/MM/yyyy") : "N/A")</dd>
+            </dl>
+        </div>
+    </div>
+    <p>
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.id }, new { @class = "btn btn-warning" })
+        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary" })
+    </p>
+</div>
+
